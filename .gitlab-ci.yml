@@ -2,8 +2,8 @@ image: golang:1.12.7
 
 variables:
   VERSION: "1.0"
-  REGISTRY: kj187/kubernetes-ingress-linklist
-  GO111: on
+  REGISTRY: "kj187/kubernetes-ingress-linklist"
+  GO111: "on"
   CGO_ENABLED: "0"
 
 stages:
