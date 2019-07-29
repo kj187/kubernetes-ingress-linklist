@@ -14,6 +14,7 @@ setup: info ## Initial setup
 	@GO111MODULE=$(GO111) go mod vendor
 
 lint: info ## Lint the files
+	GO111MODULE=on go get -u github.com/golang/lint/golint
 	golint -set_exit_status ${PACKAGES}
 
 unit_test: info ## Run unittests

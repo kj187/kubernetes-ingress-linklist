@@ -28,6 +28,8 @@ go:build:
 
 docker:build:push:
   stage: docker
+  services:
+  - docker:dind
   image: docker:stable
   script:
   - docker build -t "${REGISTRY}:${VERSION}.${CI_PIPELINE_ID}" .
