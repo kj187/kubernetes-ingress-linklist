@@ -1,0 +1,47 @@
+image: golang:1.12.7
+
+variables:
+  VERSION: "1.0"
+  REGISTRY: kj187/kubernetes-ingress-linklist
+  GO111: on
+  CGO_ENABLED: "0"
+
+stages:
+- test
+- build
+- docker
+
+go:lint:
+  stage: test
+  allow_failure: true
+  script:
+  - make lint
+
+go:build:
+  stage: build
+  script:
+  - mkdir bin
+  - GO111MODULE=${GO111} go mod vendor
+  - GO111MODULE=${GO111} CGO_ENABLED=${CGO_ENABLED} GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
+  artifacts:
+    paths:
+    - bin/kubernetes-ingress-linklist
+  only:
+  - master
+
+docker:build:push:
+  stage: docker
+  image: docker:stable
+  script:
+  - docker build -t "${REGISTRY}:${VERSION}.${CI_PIPELINE_ID}" .
+  - docker login -u${DOCKERHUB_USERNAME} -p${DOCKERHUB_PASSWORD}
+  - docker push "${REGISTRY}:${VERSION}.${CI_PIPELINE_ID}"
+  - echo ${VERSION}.${CI_PIPELINE_ID} > VERSION
+  - cat VERSION
+  artifacts:
+    paths:
+    - VERSION
+  dependencies:
+  - go:build
+  only:
+  - master
