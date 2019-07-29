@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Init ...
 func Init() {
 	fmt.Println("Initializing k8s ingress linklist")
 	initConfiguration()

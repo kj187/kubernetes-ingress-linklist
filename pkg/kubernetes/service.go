@@ -5,10 +5,11 @@ import (
 	"log"
 
 	k8s_go "k8s.io/client-go/kubernetes"
-	_ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
+	_ "k8s.io/client-go/plugin/pkg/client/auth/oidc" // xxx
 	k8s_clientcmd "k8s.io/client-go/tools/clientcmd"
 )
 
+// Kubernetes ...
 type Kubernetes struct {
 	clientset *k8s_go.Clientset
 	Namespace string
