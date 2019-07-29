@@ -10,7 +10,7 @@ info:
 	@go version
 
 setup: info ## Initial setup
-	@go get k8s.io/client-go@v12.0.0
+	@GO111MODULE=$(GO111) go get k8s.io/client-go@v12.0.0
 	@GO111MODULE=$(GO111) go mod vendor
 
 lint: info ## Lint the files

@@ -1,0 +1,34 @@
+{{ define "namespace" }}{{.CurrentNamespace}}{{end}}
+{{ define "headline" }}<h2><small class="text-muted">Namespace: {{.CurrentNamespace}}</small></h2>{{end}}
+{{ define "content" }}
+    <div class="row">
+        <p class="lead"><strong>Ingresses</strong></p>
+    </div>
+    <div class="row">
+        {{ if .Ingresses.Items}}
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Hosts</th>
+                    </tr>
+                </thead>
+
+                    {{ range $idx, $ingress := .Ingresses.Items }}
+                    <tr>
+                        <td valign="top">{{$ingress.Name}}</td>
+                        <td>
+                        {{ range $idx, $rule := $ingress.Spec.Rules }}
+                            <a href="https://{{$rule.Host}}" target="_blank">https://{{$rule.Host}}</a><br>
+                        {{ end }}
+                        </td>
+                    </tr>
+                    {{ end }}
+            </table>
+        {{ else }}
+            <tr>
+                <td valign="top" colspan="2">No ingress items available in this namespace</td>
+            </tr>
+        {{ end }}
+    </div>
+{{ end }}
