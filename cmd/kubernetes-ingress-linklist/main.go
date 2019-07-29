@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"github.com/kj187/kubernetes-ingress-linklist/internal/app"
+	"github.com/kj187/kubernetes-ingress-linklist/internal/server"
+)
 
 func main() {
-	fmt.Println("Hello kubernetes-ingress-linklist")
+	app.Init()
+	server.StartServer()
 }
