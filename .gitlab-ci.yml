@@ -2,7 +2,8 @@ image: golang:1.12.7
 
 variables:
   VERSION: "1.0"
-  REGISTRY: "kj187/kubernetes-ingress-linklist"
+  CI_REGISTRY: "docker.io"
+  CI_REGISTRY_IMAGE: "docker.io/kj187/kubernetes-ingress-linklist"
 
 stages:
 - test
@@ -31,9 +32,9 @@ docker:build:push:
   - docker:dind
   image: docker:stable
   script:
-  - docker build -t "${REGISTRY}:${VERSION}.${CI_PIPELINE_ID}" .
-  - docker login -u${DOCKERHUB_USERNAME} -p${DOCKERHUB_PASSWORD}
-  - docker push "${REGISTRY}:${VERSION}.${CI_PIPELINE_ID}"
+  - docker build -t "${CI_REGISTRY_IMAGE}:${VERSION}.${CI_PIPELINE_ID}" .
+  - docker login -u${CI_REGISTRY_USER} -p${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+  - docker push "${CI_REGISTRY_IMAGE}:${VERSION}.${CI_PIPELINE_ID}"
   - echo ${VERSION}.${CI_PIPELINE_ID} > VERSION
   - cat VERSION
   artifacts:
