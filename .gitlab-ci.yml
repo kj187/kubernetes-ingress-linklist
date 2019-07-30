@@ -4,6 +4,8 @@ variables:
   VERSION: "1.0"
   CI_REGISTRY: "docker.io"
   CI_REGISTRY_IMAGE: "docker.io/kj187/kubernetes-ingress-linklist"
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
 
 stages:
 - test
