@@ -5,3 +5,7 @@
 .main-image {
     padding-right: 20px;
 }
+
+.dropdown-menu {
+    font-size: 0.8rem !important;
+}

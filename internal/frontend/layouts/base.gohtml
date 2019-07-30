@@ -19,9 +19,17 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Choose namespace
+                                Choose here
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {{ if .CustomPages }}
+                                    <h6 class="dropdown-header">Custom</h6>
+                                    {{ range $idx, $customPage := .CustomPages }}
+                                        <a class="dropdown-item" href="/custom/{{$idx}}">{{$customPage.title}}</a>
+                                    {{ end }}
+                                    <div class="dropdown-divider"></div>
+                                    <h6 class="dropdown-header">Namespaces</h6>
+                                {{ end }}
                                 {{ range $idx, $ns := .Namespaces.Items }}
                                     <a class="dropdown-item" href="/{{$ns.Name}}">{{$ns.Name}}</a>
                                 {{ end }}

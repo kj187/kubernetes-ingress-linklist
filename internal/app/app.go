@@ -15,6 +15,7 @@ func Init() {
 
 func initConfiguration() {
 	viper.SetConfigName("settings")
+	viper.AddConfigPath("/kubernetes-ingress-linklist")
 	viper.AddConfigPath(".")
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file, %s", err)

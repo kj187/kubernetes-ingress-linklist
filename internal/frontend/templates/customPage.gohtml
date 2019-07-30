@@ -1,0 +1,30 @@
+{{ define "namespace" }}{{.CustomPage}}{{end}}
+{{ define "headline" }}<h2><small class="text-muted">{{.CustomPage}}</small></h2>{{end}}
+{{ define "content" }}
+    <div class="row">
+        <p class="lead"><strong>Custom page</strong></p>
+    </div>
+    <div class="row">
+        {{ if .CustomLinks}}
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Hosts</th>
+                </tr>
+                </thead>
+
+            {{ range $idx, $customPage := .CustomLinks }}
+                <tr>
+                    <td valign="top">{{$customPage.title}}</td>
+                    <td><a href="{{$customPage.link}}" target="_blank">{{$customPage.link}}</a></td>
+                </tr>
+            {{ end }}
+            </table>
+        {{ else }}
+            <tr>
+                <td valign="top" colspan="2">No links available in this custom page</td>
+            </tr>
+        {{ end }}
+    </div>
+{{ end }}
