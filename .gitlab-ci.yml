@@ -33,7 +33,7 @@ docker:build:push:
   image: docker:stable
   script:
   - docker build -t "${CI_REGISTRY_IMAGE}:${VERSION}.${CI_PIPELINE_ID}" .
-  - docker login -u${CI_REGISTRY_USER} -p${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+  - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
   - docker push "${CI_REGISTRY_IMAGE}:${VERSION}.${CI_PIPELINE_ID}"
   - echo ${VERSION}.${CI_PIPELINE_ID} > VERSION
   - cat VERSION
