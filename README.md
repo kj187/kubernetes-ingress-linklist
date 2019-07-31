@@ -35,3 +35,23 @@ customPages:
 
 ![Example custom page](assets/documentation/custom-page.png "Example custom page")
 
+## Index page redirect
+
+You can set a temporary redirect via settings. The default behaviour is a redirect to the `default` namespace.
+
+```
+redirectRootPageTo: /default
+```
+
+You can change this by overriding the value. You can add a namespace or a custom page (keep in mind to prefix the path with `custom/`). 
+Example: 
+
+```
+redirectRootPageTo: /custom/demo1
+customPages:
+  demo1:
+    title: Demo 1
+    links:
+    - title: Demo Link 1
+      link: http://kj187.de
+```

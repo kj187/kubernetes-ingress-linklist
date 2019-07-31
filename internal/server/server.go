@@ -30,7 +30,12 @@ func NullHandler(w http.ResponseWriter, r *http.Request) {}
 
 // IndexHandler ...
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "//"+r.Host+"/default", http.StatusPermanentRedirect)
+	redirectRootPageTo := viper.GetString("redirectRootPageTo")
+	if redirectRootPageTo != "" {
+		http.Redirect(w, r, fmt.Sprintf("//%v%v", r.Host, redirectRootPageTo), http.StatusTemporaryRedirect)
+		return
+	}
+	http.Redirect(w, r, "//"+r.Host+"/default", http.StatusTemporaryRedirect)
 }
 
 // HealthCheckHandler ...
