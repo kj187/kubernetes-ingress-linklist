@@ -33,7 +33,7 @@ jobs:
     - name: Build
       run: |
         mkdir bin
-        GO111MODULE=on GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
+        GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
