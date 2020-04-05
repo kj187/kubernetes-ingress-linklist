@@ -24,6 +24,9 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
 
+    - name: Run golangci-lint
+      uses: actions-contrib/golangci-lint@v1
+
     - name: Get dependencies   
       run: |
         GO111MODULE=$GO111 go mod vendor
@@ -37,7 +40,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         name: kj187/kubernetes-ingress-linklist
-        username: kj187
-        password: ${{ secrets.CI_REGISTRY_PASSWORD }}
+        username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
         tag_semver: true
         
