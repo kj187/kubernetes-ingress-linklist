@@ -47,6 +47,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
     - name: Push image
       run: |
+        echo "IMAGE_NAME=$IMAGE_NAME"
         IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
         
         # Change all uppercase to lowercase
@@ -61,9 +62,9 @@ jobs:
         # Use Docker `latest` tag convention
         [ "$VERSION" == "master" ] && VERSION=latest
 
-        echo IMAGE_ID=$IMAGE_ID
-        echo VERSION=$VERSION
+        echo "IMAGE_ID=$IMAGE_ID"
+        echo "VERSION=$VERSION"
 
-        docker tag image $IMAGE_ID:$VERSION
+        docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
         docker push $IMAGE_ID:$VERSION
      
