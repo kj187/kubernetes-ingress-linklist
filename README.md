@@ -1,6 +1,7 @@
 # Kubernetes Ingress Linklist
 
-![pipeline](https://github.com/kj187/kubernetes-ingress-linklist/workflows/pipeline/badge.svg?branch=master)
+
+[![pipeline](https://github.com/kj187/kubernetes-ingress-linklist/workflows/pipeline/badge.svg?branch=master)](https://github.com/kj187/kubernetes-ingress-linklist/actions?query=workflow%3Apipeline)
 
 UI with a list of all available Kubernetes ingresses per namespace
 
