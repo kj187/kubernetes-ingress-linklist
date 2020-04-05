@@ -32,3 +32,12 @@ jobs:
       run: |
         mkdir bin
         GO111MODULE=$GO111 CGO_ENABLED=$CGO_ENABLED GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
+        
+    - name: Publish Docker
+      uses: elgohr/Publish-Docker-Github-Action@2.14
+      with:
+        name: kj187/kubernetes-ingress-linklist
+        username: kj187
+        password: ${{ secrets.CI_REGISTRY_PASSWORD }}
+        tag_semver: true
+        
