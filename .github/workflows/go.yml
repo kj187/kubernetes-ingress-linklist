@@ -1,6 +1,8 @@
 name: pipeline
 
 on:
+  release:
+    types: [published]  
   push:
     branches: [ master ]
   pull_request:
@@ -46,5 +48,5 @@ jobs:
         name: kj187/kubernetes-ingress-linklist
         username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
         password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-        tag_semver: true
+        tags: "latest,${{ env.RELEASE_VERSION }}"
         
