@@ -1,4 +1,4 @@
-name: Go
+name: pipeline
 
 on:
   push:
@@ -7,37 +7,33 @@ on:
     branches: [ master ]
 
 jobs:
+  lint:
+    name: Go Lint
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Install Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Lint Go Code
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin
+          go get -u golang.org/x/lint/golint 
+          golint -set_exit_status $(go list ./... | grep -v /vendor/)
+          
   build:
     name: Build
-    env:
-      GO111: "on"
-      CGO_ENABLED: 0   
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
-
-    - name: Install Go 1.13
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.13
-      
-    - name: Check out code
-      uses: actions/checkout@v2
-
     - name: Get dependencies   
       run: |
-        GO111MODULE=$GO111 go mod vendor
-
-    - name: Go lint
-      shell: bash
-      run: |
-        GO111MODULE=$GO111 go get -u golang.org/x/lint/golint
-        golint -set_exit_status $(go list ./... | grep -v /vendor/)
-
+        GO111MODULE=on go mod vendor
     - name: Build
       run: |
         mkdir bin
-        GO111MODULE=$GO111 CGO_ENABLED=$CGO_ENABLED GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
-        
+        GO111MODULE=on GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
