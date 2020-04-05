@@ -6,6 +6,22 @@ UI with a list of all available Kubernetes ingresses per namespace
 
 ![Example UI](assets/documentation/example-ui.png "Example UI")
 
+## Usage
+
+### Deploy using Helm Chart
+
+TODO
+
+### Deploying to Minikube
+
+TODO 
+
+```
+kubectl apply -f deploy/
+kubectl port-forward service/kuberetes-ingress-linklist 8080:80
+```
+
+
 ## Custom pages
 
 It is also possible to add custom pages via settings. 

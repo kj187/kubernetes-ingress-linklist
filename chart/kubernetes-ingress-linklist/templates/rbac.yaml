@@ -1,0 +1,73 @@
+{{ $root := .}}
+{{- range $key, $value := $root.Values.namespaces }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: {{ $value }}-ingress-linklist
+  name: {{ $value }}-ingress-linklist
+  namespace: {{ $value }}
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: {{ $value }}-ingress-linklist
+  name: {{ $value }}-ingress-linklist
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ $value }}-ingress-linklist
+subjects:
+- kind: ServiceAccount
+  name: {{ $value }}-ingress-linklist
+  namespace: {{ $value }}
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: {{ $value }}-ingress-linklist
+rules:
+- apiGroups: ["extensions"]
+  resources: ["ingresses"]
+  verbs: ["list"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["list"]
+{{- end }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: k28s-infrastructure-ingress-linklist
+  name: k28s-infrastructure-ingress-linklist
+  namespace: k28s-infrastructure
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: k28s-infrastructure-ingress-linklist
+  name: k28s-infrastructure-ingress-linklist
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: k28s-infrastructure-ingress-linklist
+subjects:
+  - kind: ServiceAccount
+    name: k28s-infrastructure-ingress-linklist
+    namespace: k28s-infrastructure
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: k28s-infrastructure-ingress-linklist
+rules:
+  - apiGroups: ["extensions"]
+    resources: ["ingresses"]
+    verbs: ["list"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["list"]
