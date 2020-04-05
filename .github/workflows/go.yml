@@ -12,24 +12,26 @@ jobs:
     env:
       GO111: "on"
       CGO_ENABLED: 0   
+      GOPATH: ${{ github.workspace }}
     runs-on: ubuntu-latest
     steps:
 
-    - name: Set up Go 1.13
+    - name: Install Go 1.13
       uses: actions/setup-go@v1
       with:
         go-version: 1.13
-      id: go
-
-    - name: Check out code into the Go module directory
+      
+    - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Run golangci-lint
-      uses: actions-contrib/golangci-lint@v1
+    - name: Go lint
+      shell: bash
+      run: |
+        GO111MODULE=$GO111 go get -u golang.org/x/lint/golint
+        golint -set_exit_status $(shell go list ./... | grep -v /vendor/)
 
     - name: Get dependencies   
-      run: |
-        GO111MODULE=$GO111 go mod vendor
+      run: GO111MODULE=$GO111 go mod vendor
 
     - name: Build
       run: |
