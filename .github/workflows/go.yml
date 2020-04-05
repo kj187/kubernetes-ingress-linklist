@@ -26,11 +26,12 @@ jobs:
     - name: Get dependencies   
       run: |
         GO111MODULE=$GO111 go mod vendor
-        GO111MODULE=$GO111 go get -u golang.org/x/lint/golint
 
     - name: Go lint
       shell: bash
-      run: golint -set_exit_status $(shell go list ./... | grep -v /vendor/)
+      run: |
+        GO111MODULE=$GO111 go get -u golang.org/x/lint/golint
+        golint -set_exit_status $(go list ./... | grep -v /vendor/)
 
     - name: Build
       run: |
