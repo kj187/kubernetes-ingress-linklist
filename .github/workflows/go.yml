@@ -12,7 +12,6 @@ jobs:
     env:
       GO111: "on"
       CGO_ENABLED: 0   
-      GOPATH: ${{ github.workspace }}
     runs-on: ubuntu-latest
     steps:
 
@@ -24,14 +23,14 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
+    - name: Get dependencies   
+      run: |
+        GO111MODULE=$GO111 go mod vendor
+        GO111MODULE=$GO111 go get -u golang.org/x/lint/golint
+
     - name: Go lint
       shell: bash
-      run: |
-        GO111MODULE=$GO111 go get -u golang.org/x/lint/golint
-        golint -set_exit_status $(shell go list ./... | grep -v /vendor/)
-
-    - name: Get dependencies   
-      run: GO111MODULE=$GO111 go mod vendor
+      run: golint -set_exit_status $(shell go list ./... | grep -v /vendor/)
 
     - name: Build
       run: |
