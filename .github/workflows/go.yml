@@ -20,10 +20,7 @@ jobs:
           go-version: 1.13
       - uses: actions/checkout@v2
       - name: Lint Go Code
-        run: |
-          export PATH=$PATH:$(go env GOPATH)/bin
-          go get -u golang.org/x/lint/golint 
-          golint -set_exit_status $(go list ./... | grep -v /vendor/)
+        run: make lint
           
   build:
     name: Build
@@ -37,24 +34,10 @@ jobs:
     - name: Get dependencies   
       run: GO111MODULE=$GO111MODULE go mod vendor
     - name: Go Build
-      run: |
-        mkdir bin
-        GO111MODULE=$GO111MODULE CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor src/cmd/kubernetes-ingress-linklist/main.go
+      run: make go_build
     - name: Docker Build
-      run: docker build . --file Dockerfile --tag ${{ github.repository }}
+      run: make docker_build REPOSITORY="${{ github.repository }}"
     - name: Log into registry
-      run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u ${{ github.actor }} --password-stdin
+      run: make dockerhub_login DOCKER_REGISTRY_PASSWORD="${{ secrets.DOCKER_REGISTRY_PASSWORD }}" DOCKER_REGISTRY_ACTOR="${{ github.actor }}"
     - name: Push image
-      run: |
-        IMAGE_ID=${{ github.repository }}
-        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')  # Strip git ref prefix from version
-        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')  # Strip "v" prefix from tag name
-        [ "$VERSION" == "master" ] && VERSION=latest  # Use Docker `latest` tag convention
-
-        echo "IMAGE_ID=$IMAGE_ID"
-        echo "VERSION=$VERSION"
-
-        docker tag $IMAGE_ID $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID
-     
+      run: make docker_push REPOSITORY="${{ github.repository }}" REF="${{ github.ref }}"

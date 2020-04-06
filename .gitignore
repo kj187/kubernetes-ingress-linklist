@@ -3,4 +3,4 @@
 .idea
 .temp
 /vendor
-bin
+k8s-ingress-linklist

@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: kj187/kubernetes-ingress-linklist
-  pullPolicy: IfNotPresent
+  pullPolicy: Always  # IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
