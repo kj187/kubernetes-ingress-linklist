@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-ingress-linklist
+  labels:
+    app.kubernetes.io/name: k8s-ingress-linklist
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: k8s-ingress-linklist
+      app.kubernetes.io/instance: k8s-ingress-linklist
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: k8s-ingress-linklist
+        app.kubernetes.io/instance: k8s-ingress-linklist
+    spec:
+      serviceAccountName: k8s-ingress-linklist
+      securityContext:
+        {}
+      volumes:
+        - name: settings
+          configMap:
+            name: k8s-ingress-linklist
+      containers:
+        - name: k8s-ingress-linklist
+          securityContext:
+            {}
+          image: "kj187/kubernetes-ingress-linklist:1.1.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /kubernetes-ingress-linklist
+              name: settings
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {}

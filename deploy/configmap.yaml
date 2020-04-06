@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-ingress-linklist
+  labels:
+    app.kubernetes.io/name: k8s-ingress-linklist
+data:
+  settings.yaml: |
+    redirectRootPageTo: /custom/global
+    customPages:
+      global:
+        title: Global
+        links:
+        - title: kj187
+          link: http://kj187.de

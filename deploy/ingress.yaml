@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: k8s-ingress-linklist
+  labels:
+    app.kubernetes.io/name: k8s-ingress-linklist
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: "k8s-ingress-linklist.local"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: k8s-ingress-linklist
+              servicePort: 80
