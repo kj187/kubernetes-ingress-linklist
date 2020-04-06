@@ -22,7 +22,7 @@ unit_test: info ## Run unittests
 
 go_build_linux: info ## Build the binary file for linux/amd64
 	GO111MODULE=$(GO111) go mod vendor
-	GO111MODULE=$(GO111) CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
+	GO111MODULE=$(GO111) CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor src/cmd/kubernetes-ingress-linklist/main.go
 
 help: ## Display this help screen
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

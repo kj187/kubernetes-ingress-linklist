@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/gorilla/mux"
-	"github.com/kj187/kubernetes-ingress-linklist/pkg/kubernetes"
+	"github.com/kj187/kubernetes-ingress-linklist/src/pkg/kubernetes"
 )
 
 // StartServer ...

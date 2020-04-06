@@ -7,21 +7,31 @@ UI with a list of all available Kubernetes ingresses per namespace
 
 ## Example UI
 
-![Example UI](assets/documentation/example-ui.png "Example UI")
+![Example UI](src/assets/documentation/example-ui.png "Example UI")
 
-## Usage
+## Installing
 
-### Deploy using Helm Chart
-
-TODO
-
-### Deploying to Minikube
-
-TODO 
+### Installing via Helm Chart
 
 ```
-kubectl apply -f deploy/
-kubectl port-forward service/kuberetes-ingress-linklist 8080:80
+$ git clone https://github.com/kj187/kubernetes-ingress-linklist.git
+$ cd kubernetes-ingress-linklist/chart
+$ helm lint k8s-ingress-linklist ./k8s-ingress-linklist
+$ helm upgrade --install k8s-ingress-linklist ./k8s-ingress-linklist
+
+# for minikube on localhost add the ingress
+$ IP=$(minikube ip) echo "${IP} k8s-ingress-linklist.local" | sudo tee -a /etc/hosts
+```
+
+### Installing via kubectl
+
+```
+$ git clone https://github.com/kj187/kubernetes-ingress-linklist.git
+$ cd kubernetes-ingress-linklist
+$ kubectl apply -f deploy/
+
+# for minikube on localhost add the ingress
+$ IP=$(minikube ip) echo "${IP} k8s-ingress-linklist.local" | sudo tee -a /etc/hosts
 ```
 
 
@@ -32,7 +42,8 @@ To do that, just create a new ConfigMap and mount this into the `kubernetes-ingr
 
 The mount path must be `/kubernetes-ingress-linklist` and the filename must be `settings.yaml` 
 
-**Example: `/kubernetes-ingress-linklist/settings.yaml`**
+**Example file:** `chart/k8s-ingress-linklist/templates/configmap.yaml`
+**Example content**:
 ```
 customPages:
   demo1:
@@ -52,7 +63,7 @@ customPages:
 ```
 
 
-![Example custom page](assets/documentation/custom-page.png "Example custom page")
+![Example custom page](src/assets/documentation/custom-page.png "Example custom page")
 
 ## Index page redirect
 

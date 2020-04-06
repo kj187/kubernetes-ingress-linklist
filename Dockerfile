@@ -8,8 +8,8 @@ RUN chmod +x /usr/bin/kubernetes-ingress-linklist
 ENV PATH $PATH:/usr/bin
 
 WORKDIR /app
-COPY internal/frontend/ /app/internal/frontend
-COPY web/ /app/web
+COPY src/internal/frontend /app/internal/frontend
+COPY src/web /app/web
 
 EXPOSE 8080
 
