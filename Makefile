@@ -13,9 +13,7 @@ setup: info ## Initial setup
 	GO111MODULE=$(GO111) go mod vendor
 
 lint: info ## Lint the files
-	export PATH=$PATH:$(go env GOPATH)/bin
-	go get -u golang.org/x/lint/golint
-	golint -set_exit_status $(go list ./... | grep -v /vendor/)
+	./scripts/go_lint.sh
 
 go_build: info ## Build the binary file
 	GO111MODULE=$(GO111) go mod vendor
