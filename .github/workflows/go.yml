@@ -39,7 +39,7 @@ jobs:
     - name: Go Build
       run: |
         mkdir bin
-        GO111MODULE=$GO111MODULE CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor cmd/kubernetes-ingress-linklist/main.go
+        GO111MODULE=$GO111MODULE CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/kubernetes-ingress-linklist -mod vendor src/cmd/kubernetes-ingress-linklist/main.go
     - name: Docker Build
       run: docker build . --file Dockerfile --tag ${{ github.repository }}
     - name: Log into registry
