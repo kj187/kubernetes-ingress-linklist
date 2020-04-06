@@ -1,0 +1,10 @@
+apiVersion: v2
+name: k8s-ingress-linklist
+description: UI with a list of all available Kubernetes ingresses per namespace
+home: https://github.com/kj187/kubernetes-ingress-linklist
+type: application
+version: 1.0.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: 1.1.0
